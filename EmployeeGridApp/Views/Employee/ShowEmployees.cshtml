@@ -1,0 +1,43 @@
+﻿@model IEnumerable<EmployeeGridApp.Models.Employee>
+
+@{
+    Layout = "SiteLayout.cshtml";  
+}
+<link href="~/Content/sample.css" rel="stylesheet" />
+<h2>ShowEmployees</h2>
+
+<table id="employeeGrid" class="table table-bordered table-striped grid">
+    <tr>
+        <th>Name</th>
+        <th>Designation</th>
+        <th>Department</th>
+        <th>Company</th>
+        <th>Year</th>
+        <th>Salary</th>
+    </tr>
+    @foreach (var group in Model.GroupBy(x => x.Company))
+    {
+        <tr class="group-header">
+            <td colspan="100">
+                <div class="h4">@group.Key</div>
+                <div>
+                    <span class="col-md-3">Company: @group.Key</span>
+                    <span class="col-md-3">Departments: @group.Select(x => x.Department).Distinct().ToList().Count()</span>
+                    <span class="col-md-3">Total Employee: @group.Count()</span>
+                    <span class="col-md-3">Avg Salary: @group.Average(x => x.Salary).ToString("C")</span>
+                </div>
+            </td>
+        </tr>
+        foreach (var item in group)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Designation</td>
+                <td>@item.Department</td>
+                <td>@item.Company</td>
+                <td class="text-right">@item.Year</td>
+                <td class="text-right">@item.Salary.ToString("C")</td>
+            </tr>
+        }
+    }
+</table>

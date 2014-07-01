@@ -1,0 +1,121 @@
+<html>
+
+<head>
+    <title>JSON SAMPLE</title>
+    <style>
+        /* #wire ul li {
+            list-style: none;
+            list-style-image: url(list.png);
+        } */
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            debugger;
+            var count = 0;
+            var can = document.getElementById("can");
+            var ctx = can.getContext('2d');
+            can.width = 800;
+            can.height = 600;
+            var canWidth = can.width;
+            var canHeight = can.height;
+
+            wire.addEventListener('click', function tap(e) {
+                debugger;
+                var id = e.target.id;
+                var canvasdraw = id.split('_');
+                createzone(Number(canvasdraw[1]));
+            }, false);
+
+            $.ajax({
+                url: "tree.json",
+                dataType: "text",
+                success: function (data) {
+                    debugger;
+                    var json = $.parseJSON(data);
+                    showData(json.tree[0]);
+                }
+            });
+
+            function showData(val) {
+                debugger;
+                console.log(val)
+                for (i in val) {
+                    if (typeof val[i] == "object" && Object.keys(val[i]).length > 0) {
+                        console.log(i);
+                        var mainList = "<ul><li>" + i + "</li></ul>";
+                        $('#wire').append(mainList);
+                        console.log(i);
+                        showData(val[i]);
+                    }
+                    if (val[i]) {
+                        count++;
+                        var list = "<ul><li>" + i + "</li></ul>";
+                        $('#wire > ul:nth-last-child(1)').append(list);
+                        console.log(i);
+                        var subList = "<ul><li id=T_" + count + ">" + val[i] + "</li></ul>";
+                        $('#wire > ul:nth-last-child(1) > ul:nth-last-child(1)').append(subList);
+                        console.log(i, ' ', val[i])
+                    }
+                }
+            }
+
+            function createzone(zone) {
+                debugger;
+                switch (zone) {
+                    case 1:
+                        var devices = 6;
+                        var zoneid = 'A'
+                        drawzone(devices, zoneid);
+                        //alert("From casecondition" + zone);
+                        break;
+                    case 2:
+                        var devices = 8;
+                        var zoneid = 'B'
+                        drawzone(devices, zoneid);
+                        //alert("From casecondition" + zone);
+                        break;
+                    case 3:
+                        var devices = 4;
+                        var zoneid = 'C'
+                        drawzone(devices, zoneid);
+                        break;
+                    case 4:
+                        var devices = 5;
+                        var zoneid = 'D'
+                        drawzone(devices, zoneid);
+                        break;
+                }
+            }
+
+            function drawzone(d, zid) {
+                debugger;
+                ctx.clearRect(0, 0, canWidth, canHeight);
+                ctx.fillStyle = "#CCC";
+                ctx.fillRect(100, 0, 50, 50);
+                ctx.fillStyle = "#000";
+                ctx.font = "20px Georgia";
+                ctx.fillText(zid, 115, 30);
+
+                for (i = 1; i <= d; i++) {
+                    ctx.fillStyle = "#FF0000";
+                    if (i % 2 != 0) {
+                        ctx.fillRect(50, i * 50 + 50, 50, 50);
+                    } else
+                        ctx.fillRect(150, i * 50, 50, 50);
+                }
+
+
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div id="wire" style="height:300px; width:200px; border: 1px solid red; float:left;">
+    </div>
+    <canvas id="can" style="width:800px; height:400px; margin-left:25px; border: 1px solid green; float:left;"></canvas>
+
+</body>
+
+</html>

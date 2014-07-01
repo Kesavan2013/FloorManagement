@@ -1,0 +1,19 @@
+﻿body {
+    font-family: 'Segoe UI', Calibri, Arial;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.btn{
+    border-radius:0;
+}
+
+tr.group-header{
+    cursor:pointer;
+}

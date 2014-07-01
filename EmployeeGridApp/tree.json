@@ -1,0 +1,13 @@
+{
+    "tree": [{
+        "DataCenter1": {
+            "Room1": "Zone1",
+            "Room2": "Zone1",
+            "Room3": "Zone1"
+        },
+
+        "DataCenter2": {
+            "Room1": "Zone1"
+        }
+        }]
+}
